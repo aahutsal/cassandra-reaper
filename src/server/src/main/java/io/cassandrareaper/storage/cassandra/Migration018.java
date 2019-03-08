@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2018 The Last Pickle Ltd
+ * Copyright 2019-2019 The Last Pickle Ltd
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,8 +34,7 @@ public final class Migration018 {
   }
 
   /**
-   * if Cassandra is running version less than 4.0
-   *  alter every table to set `dclocal_read_repair_chance` to zero
+   * Apply TWCS for metrics tables if the Cassandra version allows it.
    */
   public static void migrate(Session session, String keyspace) {
 
@@ -76,7 +75,7 @@ public final class Migration018 {
           LOG.warn("{} was successfully altered to use TWCS.", OPERATIONS_TABLE);
         }
       } catch (RuntimeException e) {
-        LOG.error("Failed altering ");
+        LOG.error("Failed altering metrics tables", e);
       }
     }
 

@@ -260,7 +260,7 @@ public final class CassandraStorage implements IStorage, IDistributedStorage {
         if (currentVersion <= 15) {
           Migration016.migrate(session, keyspace);
         }
-        // Switch metrics table to TWCS if possible
+        // Switch metrics table to TWCS if possible, this is intentionally executed every startup
         Migration018.migrate(session, keyspace);
       }
     } catch (RuntimeException e) {
